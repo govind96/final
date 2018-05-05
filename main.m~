@@ -1,0 +1,5 @@
+tic;
+lucas('172.jpg', '173.jpg', 1);
+lucas('174.jpg', '175.jpg', 3);
+%lucas('176.jpg', '177.jpg', 5);
+toc;
