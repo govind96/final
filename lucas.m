@@ -1,34 +1,33 @@
-function dm = lucas(img1, img2, initial)
+function dm = lucas(img1, img2, frame_no)
 
 im1 = imread(img1);
 im2 = imread(img2);
 
 im1 = im2double(rgb2gray(im1));
-
 im2 = im2double(rgb2gray(im2));
 
-ww = 40;
-w = round(ww/2);
+w = 5;
 
 sc = 3;
-% im2c = imresize(im2, 1/sc);
-subplot(1, 3, 1);
-imshow(img2);
-im2c = gaussianPyramidHarrisCorner(img2, 2);
+im2c = imresize(im2, 1/3);
+% imshow(img2);
+% im2c = gaussianPyramidHarrisCorner(img2, sc);
 % C1 = corner(im2c);
 % subplot(1, 3, 2);
 % 
 % imshow(im2c);
 % subplot(1, 3, 1);
-im2c = imread(im2c);
-im2c = im2double(im2c);
-
+% im2c = imread(im2c);
+% im2c = im2double(im2c);
+% imshow(im2c);
 corners = detectHarrisFeatures(im2c);
 C1 = corners.Location;
-% 
-% C1 = [r2, c2];
+% % 
+% % C1 = [r2, c2];
 C1 = C1*sc;
-disp(C1);
+% [r1, c1] = harrisCorner(im2c, frame_no);
+% C1 = [c1, r1];
+% C1 = C1*sc;
 % imshow(C1);
 k = 1;
 for i = 1:size(C1,1)
@@ -41,11 +40,11 @@ for i = 1:size(C1,1)
     end
 end
 
-subplot(1,3,2);
-% 
-imshow(img2);
-hold on
-plot(C(:,1), C(:,2),'c.');
+% subplot(1,3,2);
+% % 
+% imshow(img2);
+% hold on
+% plot(C(:,1), C(:,2),'c.');
 
 Ix_m = conv2(im1,[-1 1; -1 1], 'valid'); 
 Iy_m = conv2(im1, [-1 -1; 1 1], 'valid'); 
@@ -72,9 +71,9 @@ for k = 1:length(C(:,2))
 end
 
 
-subplot(1, 3, 3);% 
-size(C(:,1));
-size(C(:,2));
+subplot(1, 2, 2);% 
+% size(C(:,1));
+% size(C(:,2));
 
 
 % min(C(x/2:x-1,:,1))
@@ -86,6 +85,8 @@ size(C(:,2));
 imshow(img2);
 hold on;
 quiver(C(:,1), C(:,2), u,v, 0.8,'c');
+title('Optical Flow');
+
 % if initial==1
 %     rect = getrect;
 %     

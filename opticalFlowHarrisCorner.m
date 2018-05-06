@@ -2,11 +2,11 @@ function opticalFlowHarrisCorner(img1, img2, dim)
 
 image1 = imread(img1, 'jpg');
 image2 = imread(img2,'jpg' );
-% image1 = rgb2gray(image1);
-% image2 = rgb2gray(image2);
+image1 = rgb2gray(image1);
+image2 = rgb2gray(image2);
 
-%image1 = im2double(image1);
-%image2 = im2double(image2);
+% image1 = im2double(image1);
+% image2 = im2double(image2);
 % subplot(2, 3, 1);
 % imshow(image1);
 % subplot(2, 3, 2);
@@ -67,16 +67,21 @@ final2 = zeros(height, width);
 %[r1, c1] = harrisCorner(img1, dim);
 %r1 = zeros(200);
 %c1 = zeros(200);
-[r1, c1] = harrisCorner(img1, dim);
-subplot(2, 3, dim);
-imagesc(image1), axis image, colormap(gray), hold on
-plot(c1, r1, 'ys'), title('corner');
+sc = 2;
+im1c = imresize(image1, 1/sc);
+[r1, c1] = harrisCorner(im1c, dim);
+% subplot(2, 3, dim);
+% imagesc(image1), axis image, colormap(gray), hold on
+% plot(c1, r1, 'ys'), title('corner');
 % disp(r1);
 % disp(c1);
-% corners = detectHarrisFeatures(imread(img1));
+% corners = detectHarrisFeatures(image1);
 % C1 = corners.Location;
 % r1 = int64(C1(:,1));
 % c1 = int64(C1(:,2));
+% subplot(2, 3, dim);
+% imagesc(image1), axis image, colormap(gray), hold on
+% plot(c1, r1, 'ys'), title('corner');
 % disp(C1);
 
 % r1= x(1);
@@ -118,9 +123,10 @@ for i = 1:length1
 end
 final1 = flipud(final1);
 final2 = flipud(final2);
-subplot(2, 3, dim+3);
+subplot(1, 2, 2);
 imagesc(image1), axis image, colormap(gray), hold on
 quiver (final1, final2, 15), title('op. flow');
 % disp(final1);
+drawnow;
     
 end
